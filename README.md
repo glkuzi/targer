@@ -1,3 +1,32 @@
+# CNN-CNN-CRF tagger
+Model for named entity recognition. As a baseline was used the neural tagging library _targer_. To this baseline was added CNN-CNN-CRF NER model with CNN character-level encoder, CNN word-level encoder and CRF decoder. To the original repository was added following files:
+```
+|__ data/
+        |__ NER/ --> Datasets for Named Entity Recognition
+            |__ CoNNL_2003_test_task/ --> data for test task (English)
+|__ pretrained/
+        |__ CNN_CNN_CRF_tagger.hdf5 --> tagger for NER, CNN+CNN+CRF trained on test task data, English
+src/
+|__models/
+   |__tagger_cnn_cnn_crf.py --> word-level CNN + char-level CNN  + CRF tagger model   
+|__layers/
+   |__layer_cnn.py --> class implements word-level convolutional 1D layer
+```
+The rest of the files have been modified to be compatible with the CNN-CNN-CRF tagger.
+
+Results of training and training parameters presented at cnn_cnn_crf_report.txt file.
+## How to run
+Process of CNN-CNN-CRF tagger training similar to training from original repository. Before training model, download one of word embedding, using .sh scripts from ./embeddings folder. After that, simply run main.py with your arguments:
+```
+python3 main.py
+```
+All arguments of main.py are similar, only one argument was added:
+
+--cnn-window-size - word-level CNN kernel size
+
+To _model_ argument was added one more option:
+
+--model {BiRNN,BiRNNCNN,BiRNNCRF,BiRNNCNNCRF, CNNCNNCRF}
 # targer
 
 This page contains code of the neural tagging library _targer_, which is a part of 

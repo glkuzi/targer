@@ -5,6 +5,7 @@ from src.models.tagger_birnn import TaggerBiRNN
 from src.models.tagger_birnn_cnn import TaggerBiRNNCNN
 from src.models.tagger_birnn_crf import TaggerBiRNNCRF
 from src.models.tagger_birnn_cnn_crf import TaggerBiRNNCNNCRF
+from src.models.tagger_cnn_cnn_crf import TaggerCNNCNNCRF
 
 
 class TaggerFactory():
@@ -79,6 +80,21 @@ class TaggerFactory():
                                        char_cnn_filter_num=args.char_cnn_filter_num,
                                        char_window_size=args.char_window_size)
             tagger.crf_layer.init_transition_matrix_empirical(tag_sequences_train)
+        elif args.model == 'CNNCNNCRF':
+            tagger = TaggerCNNCNNCRF(word_seq_indexer=word_seq_indexer,
+                                     tag_seq_indexer=tag_seq_indexer,
+                                     class_num=tag_seq_indexer.get_class_num(),
+                                     batch_size=args.batch_size,
+                                     freeze_word_embeddings=args.freeze_word_embeddings,
+                                     dropout_ratio=args.dropout_ratio,
+                                     gpu=args.gpu,
+                                     freeze_char_embeddings=args.freeze_char_embeddings,
+                                     char_embeddings_dim=args.char_embeddings_dim,
+                                     word_len=args.word_len,
+                                     char_cnn_filter_num=args.char_cnn_filter_num,
+                                     char_window_size=args.char_window_size,
+                                     cnn_window_size=args.cnn_window_size)
+            tagger.crf_layer.init_transition_matrix_empirical(tag_sequences_train)
         else:
-            raise ValueError('Unknown tagger model, must be one of "BiRNN"/"BiRNNCNN"/"BiRNNCRF"/"BiRNNCNNCRF".')
+            raise ValueError('Unknown tagger model, must be one of "BiRNN"/"BiRNNCNN"/"BiRNNCRF"/"BiRNNCNNCRF"/"CNNCNNCRF".')
         return tagger

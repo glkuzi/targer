@@ -17,17 +17,17 @@ from src.seq_indexers.seq_indexer_word import SeqIndexerWord
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Learning tagger using neural networks')
-    parser.add_argument('--train', default='data/NER/CoNNL_2003_shared_task/train.txt',
+    parser.add_argument('--train', default='data/NER/CONLL_2003_test_task/eng.train',
                         help='Train data in format defined by --data-io param.')
-    parser.add_argument('--dev', default='data/NER/CoNNL_2003_shared_task/dev.txt',
+    parser.add_argument('--dev', default='data/NER/CONLL_2003_test_task/eng.testa',
                         help='Development data in format defined by --data-io param.')
-    parser.add_argument('--test', default='data/NER/CoNNL_2003_shared_task/test.txt',
+    parser.add_argument('--test', default='data/NER/CONLL_2003_test_task/eng.testb',
                         help='Test data in format defined by --data-io param.')
     parser.add_argument('-d', '--data-io', choices=['connl-ner-2003', 'connl-pe', 'connl-wd'],
                         default='connl-ner-2003', help='Data read/write file format.')
     parser.add_argument('--gpu', type=int, default=0, help='GPU device number, -1  means CPU.')
-    parser.add_argument('--model', help='Tagger model.', choices=['BiRNN', 'BiRNNCNN', 'BiRNNCRF', 'BiRNNCNNCRF'],
-                        default='BiRNNCNNCRF')
+    parser.add_argument('--model', help='Tagger model.', choices=['BiRNN', 'BiRNNCNN', 'BiRNNCRF', 'BiRNNCNNCRF', 'CNNCNNCRF'],
+                        default='CNNCNNCRF')
     parser.add_argument('--load', '-l', default=None, help='Path to load from the trained model.')
     parser.add_argument('--save', '-s', default='%s_tagger.hdf5' % get_datetime_str(),
                         help='Path to save the trained model.')
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     parser.add_argument('--clip-grad', type=float, default=5, help='Clipping gradients maximum L2 norm.')
     parser.add_argument('--rnn-type', help='RNN cell units type.', choices=['Vanilla', 'LSTM', 'GRU'], default='LSTM')
     parser.add_argument('--rnn-hidden-dim', type=int, default=100, help='Number hidden units in the recurrent layer.')
-    parser.add_argument('--emb-fn', default='embeddings/glove.6B.100d.txt', help='Path to word embeddings file.')
+    parser.add_argument('--emb-fn', default='./embeddings/glove.6B.100d.txt', help='Path to word embeddings file.')
     parser.add_argument('--emb-dim', type=int, default=100, help='Dimension of word embeddings file.')
     parser.add_argument('--emb-delimiter', default=' ', help='Delimiter for word embeddings file.')
     parser.add_argument('--emb-load-all', type=str2bool, default=False, help='Load all embeddings to model.', nargs='?',
@@ -61,7 +61,8 @@ if __name__ == "__main__":
                         nargs='?', choices=['yes (default)', True, 'no', False])
     parser.add_argument('--char-embeddings-dim', type=int, default=25, help='Char embeddings dim, only for char CNNs.')
     parser.add_argument('--char-cnn_filter-num', type=int, default=30, help='Number of filters in Char CNN.')
-    parser.add_argument('--char-window-size', type=int, default=3, help='Convolution1D size.')
+    parser.add_argument('--char-window-size', type=int, default=3, help='Convolution1D size for char-level encoder.')
+    parser.add_argument('--cnn-window-size', type=int, default=3, help='Convolution1D size for word-level encoder.')
     parser.add_argument('--freeze-char-embeddings', type=str2bool, default=False,
                         choices=['yes', True, 'no (default)', False], nargs='?',
                         help='False to continue training the char embeddings.')

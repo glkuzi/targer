@@ -77,6 +77,13 @@ class TaggerBase(nn.Module):
         for k, word_seq in enumerate(word_sequences):
             mask_tensor[k, :len(word_seq)] = 1
         return mask_tensor # batch_size x max_seq_len
+    
+    def get_mask_from_sent_sequences(self, word_sequences, max_seq_len=150):
+        batch_num = len(word_sequences)
+        mask_tensor = self.tensor_ensure_gpu(torch.zeros(batch_num, max_seq_len, dtype=torch.float))
+        for k, word_seq in enumerate(word_sequences):
+            mask_tensor[k, :len(word_seq)] = 1
+        return mask_tensor # batch_size x max_seq_len
 
     def apply_mask(self, input_tensor, mask_tensor):
         input_tensor = self.tensor_ensure_gpu(input_tensor)
