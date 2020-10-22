@@ -1,0 +1,12 @@
+embeddings/glove.6B.100d.txt
+src/classes/__pycache__/
+src/data_io/__pycache__/
+src/evaluators/__pycache__/
+src/factories/__pycache__/
+src/layers/__pycache__/
+src/layers/layer_cnn.py
+src/models/__pycache__/
+src/seq_indexers/__pycache__/
+2020_10_22_18-37_51_report.txt
+2020_10_22_18-37_51_tagger.hdf5
+
