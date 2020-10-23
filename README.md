@@ -1,5 +1,5 @@
 # CNN-CNN-CRF tagger
-Model for named entity recognition. As a baseline was used the neural tagging library _targer_. To this baseline was added CNN-CNN-CRF NER model with CNN character-level encoder, CNN word-level encoder and CRF decoder. To the original repository was added following files:
+Model for named entity recognition. As a baseline was used the neural tagging library _targer_. To this baseline was added CNN-CNN-CRF NER model with CNN character-level encoder, CNN word-level encoder and CRF decoder. To the original repository were added following files:
 ```
 |__ data/
         |__ NER/ --> Datasets for Named Entity Recognition
